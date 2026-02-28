@@ -164,3 +164,31 @@
   - None.
 - Notes:
   - Semua data booking masih in-memory dan akan dipindah ke Prisma repository di tahap migrasi data layer.
+## STEP-BE-009 - Manual E2E Verification (Auth-Slot-Booking)
+- Date: 2026-02-28
+- Spec References:
+  - STEP-004
+  - STEP-007
+  - REQ-AUTH-001
+  - REQ-AUTH-002
+  - REQ-AUTH-003
+  - REQ-SLOT-001
+  - REQ-SLOT-002
+  - REQ-SLOT-003
+  - REQ-SLOT-004
+  - REQ-BOOKING-001
+  - REQ-BOOKING-002
+  - REQ-BOOKING-004
+  - REQ-BOOKING-005
+  - REQ-BOOKING-007
+- Added:
+  - Catatan hasil uji manual endpoint utama auth, slot, dan booking admin.
+- Updated:
+  - Status backend: alur inti booking lifecycle terverifikasi berjalan.
+- Removed:
+  - None.
+- Breaking Changes:
+  - None.
+- Notes:
+  - Verifikasi manual berhasil untuk flow: login admin, list booking pending, confirm booking, mark done.
+  - Disarankan tambah test otomatis integration pada step berikutnya.
