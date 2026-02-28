@@ -1,0 +1,236 @@
+# Backend Change Log
+
+## STEP-BE-001 - Repository Bootstrap
+- Date: 2026-02-28
+- Spec References:
+  - STEP-005
+  - STEP-006
+- Added:
+  - Struktur awal backend (`src/`, config, middleware, utils, modules, store).
+  - `package.json` dengan dependency `express`.
+  - `.env.example` untuk baseline konfigurasi runtime.
+- Updated:
+  - `README.md` backend untuk setup, rules, dan referensi spec.
+- Removed:
+  - None.
+- Breaking Changes:
+  - None.
+- Notes:
+  - Persistensi data masih in-memory untuk fase awal.
+
+## STEP-BE-002 - Auth Endpoints Implementation
+- Date: 2026-02-28
+- Spec References:
+  - STEP-005
+  - REQ-AUTH-001
+  - REQ-AUTH-002
+  - REQ-AUTH-003
+- Added:
+  - Endpoint `POST /auth/register`.
+  - Endpoint `POST /auth/login`.
+  - Endpoint `GET /auth/me`.
+  - Endpoint `GET /health` untuk health check.
+- Updated:
+  - Validasi payload auth agar konsisten dengan rule minimum spec.
+- Removed:
+  - None.
+- Breaking Changes:
+  - None.
+- Notes:
+  - Role default saat register adalah `USER`.
+
+## STEP-BE-003 - Auth Security and Envelope Standardization
+- Date: 2026-02-28
+- Spec References:
+  - STEP-004
+  - STEP-005
+- Added:
+  - Password hashing/verifikasi berbasis `crypto.scryptSync`.
+  - Bearer token signing + verification (HMAC SHA256, JWT-like format).
+  - `require-auth` middleware untuk endpoint protected.
+  - Error handler terpusat dengan standar `error_code`.
+  - Response helper sukses/error sesuai envelope spec.
+- Updated:
+  - Alur error auth agar konsisten (`VALIDATION_ERROR`, `AUTH_UNAUTHORIZED`).
+- Removed:
+  - None.
+- Breaking Changes:
+  - None.
+- Notes:
+  - Mekanisme token saat ini cukup untuk MVP internal, dapat diganti ke library JWT standar pada fase hardening.
+
+## STEP-BE-004 - Backend Changelog Policy Activation
+- Date: 2026-02-28
+- Spec References:
+  - STEP-006
+- Added:
+  - Standar log backend step-based per perubahan implementasi.
+- Updated:
+  - Aturan referensi lintas repo (`STEP-*`, `REQ-*`) di setiap entry.
+- Removed:
+  - None.
+- Breaking Changes:
+  - None.
+- Notes:
+  - Setiap perubahan backend berikutnya wajib tambah step baru, bukan overwrite step lama.
+
+## STEP-BE-005 - NestJS Migration Baseline
+- Date: 2026-02-28
+- Spec References:
+  - STEP-007
+  - REQ-AUTH-001
+  - REQ-AUTH-002
+  - REQ-AUTH-003
+- Added:
+  - Migrasi runtime backend ke NestJS + TypeScript.
+  - Modul auth NestJS (`AuthModule`, `AuthController`, `AuthService`).
+  - Global exception filter dengan envelope error standar.
+  - Prisma schema baseline (`prisma/schema.prisma`) untuk PostgreSQL.
+- Updated:
+  - Script npm (`build`, `start`, `start:dev`, `prisma:*`).
+  - README backend sesuai stack lock terbaru.
+- Removed:
+  - Legacy scaffold Express/JavaScript di folder `src`.
+- Breaking Changes:
+  - Entry point backend berubah dari `node src/server.js` ke `ts-node-dev src/main.ts` / `node dist/main.js`.
+- Notes:
+  - Data user masih in-memory selama fase migrasi bertahap ke Prisma repository.
+
+## STEP-BE-006 - Health and Slot Module Implementation
+- Date: 2026-02-28
+- Spec References:
+  - STEP-004
+  - STEP-007
+  - REQ-SLOT-001
+  - REQ-SLOT-002
+  - REQ-SLOT-003
+  - REQ-SLOT-004
+- Added:
+  - Endpoint `GET /health` pada NestJS module khusus health.
+  - Modul `Slots` dengan endpoint public/admin sesuai API contract.
+  - Role-based guard (`ADMIN|SUPER_ADMIN`) untuk endpoint `/admin/slots/*`.
+  - Validasi slot (format waktu/tanggal, capacity, status, no overlap).
+- Updated:
+  - README backend: daftar endpoint implemented terbaru.
+- Removed:
+  - None.
+- Breaking Changes:
+  - None.
+- Notes:
+  - Slot storage masih in-memory, akan dipindah ke Prisma repository pada step berikutnya.
+## STEP-BE-007 - Dev SUPER_ADMIN Seed
+- Date: 2026-02-28
+- Spec References:
+  - STEP-007
+  - REQ-ADMIN-001
+  - REQ-ADMIN-002
+  - REQ-ADMIN-003
+- Added:
+  - `DevSeedService` untuk auto-create akun `SUPER_ADMIN` saat startup (mode dev).
+  - Konfigurasi seed di env (`DEV_SEED_ENABLED`, `DEV_SUPER_ADMIN_*`).
+- Updated:
+  - `README.md` backend dengan panduan login admin lokal.
+  - `.env.example` dengan variabel seed testing.
+- Removed:
+  - None.
+- Breaking Changes:
+  - None.
+- Notes:
+  - Seed hanya untuk kebutuhan development/testing lokal.
+## STEP-BE-008 - Booking Module Implementation
+- Date: 2026-02-28
+- Spec References:
+  - STEP-004
+  - STEP-007
+  - REQ-BOOKING-001
+  - REQ-BOOKING-002
+  - REQ-BOOKING-003
+  - REQ-BOOKING-004
+  - REQ-BOOKING-005
+  - REQ-BOOKING-006
+  - REQ-BOOKING-007
+- Added:
+  - Modul `Bookings` dengan endpoint user dan admin sesuai kontrak API.
+  - State transition booking (`PENDING`, `CONFIRMED`, `REJECTED`, `CANCELED`, `DONE`).
+  - Status log in-memory (`booking_status_logs`) untuk semua perubahan status.
+  - Rule slot locking: booking `PENDING` menutup slot, `REJECTED/CANCELED` membuka slot kembali.
+- Updated:
+  - `AppModule` import `BookingsModule`.
+  - `SlotsModule` export `SlotsStore` untuk integrasi booking-slot.
+  - `README.md` backend dengan daftar endpoint booking.
+- Removed:
+  - None.
+- Breaking Changes:
+  - None.
+- Notes:
+  - Semua data booking masih in-memory dan akan dipindah ke Prisma repository di tahap migrasi data layer.
+## STEP-BE-009 - Manual E2E Verification (Auth-Slot-Booking)
+- Date: 2026-02-28
+- Spec References:
+  - STEP-004
+  - STEP-007
+  - REQ-AUTH-001
+  - REQ-AUTH-002
+  - REQ-AUTH-003
+  - REQ-SLOT-001
+  - REQ-SLOT-002
+  - REQ-SLOT-003
+  - REQ-SLOT-004
+  - REQ-BOOKING-001
+  - REQ-BOOKING-002
+  - REQ-BOOKING-004
+  - REQ-BOOKING-005
+  - REQ-BOOKING-007
+- Added:
+  - Catatan hasil uji manual endpoint utama auth, slot, dan booking admin.
+- Updated:
+  - Status backend: alur inti booking lifecycle terverifikasi berjalan.
+- Removed:
+  - None.
+- Breaking Changes:
+  - None.
+- Notes:
+  - Verifikasi manual berhasil untuk flow: login admin, list booking pending, confirm booking, mark done.
+  - Disarankan tambah test otomatis integration pada step berikutnya.
+
+## STEP-BE-010 - CORS Configuration for Frontend Integration
+- Date: 2026-02-28
+- Spec References:
+  - STEP-007
+  - REQ-AUTH-002
+- Added:
+  - Env `FRONTEND_ORIGIN` untuk kontrol origin frontend.
+- Updated:
+  - `main.ts` dengan `app.enableCors(...)` untuk request dari frontend Nuxt (`http://localhost:3001`).
+  - `.env.example` dengan variabel `FRONTEND_ORIGIN`.
+- Removed:
+  - None.
+- Breaking Changes:
+  - None.
+- Notes:
+  - Fix ini menyelesaikan error CORS saat login dari frontend ke backend.
+## STEP-BE-011 - Super Admin Admin-Management Endpoints
+- Date: 2026-02-28
+- Spec References:
+  - STEP-004
+  - STEP-007
+  - REQ-ADMIN-001
+  - REQ-ADMIN-002
+  - REQ-ADMIN-003
+- Added:
+  - Modul `SuperAdmin` dengan endpoint:
+    - `POST /super-admin/admins`
+    - `GET /super-admin/admins`
+    - `PATCH /super-admin/admins/:id`
+  - DTO payload create/update admin.
+- Updated:
+  - `UsersStore` ditambah capability list/update user untuk kebutuhan super-admin flow.
+  - `AuthModule` mengekspor `UsersStore` agar dipakai lintas modul.
+  - `AppModule` import `SuperAdminModule`.
+  - README backend daftar endpoint implemented terbaru.
+- Removed:
+  - None.
+- Breaking Changes:
+  - None.
+- Notes:
+  - Endpoint update dibatasi pada akun ber-role `ADMIN` untuk menjaga scope manajemen akun admin.
