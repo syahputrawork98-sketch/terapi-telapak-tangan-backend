@@ -118,3 +118,22 @@
   - None.
 - Notes:
   - Slot storage masih in-memory, akan dipindah ke Prisma repository pada step berikutnya.
+## STEP-BE-007 - Dev SUPER_ADMIN Seed
+- Date: 2026-02-28
+- Spec References:
+  - STEP-007
+  - REQ-ADMIN-001
+  - REQ-ADMIN-002
+  - REQ-ADMIN-003
+- Added:
+  - `DevSeedService` untuk auto-create akun `SUPER_ADMIN` saat startup (mode dev).
+  - Konfigurasi seed di env (`DEV_SEED_ENABLED`, `DEV_SUPER_ADMIN_*`).
+- Updated:
+  - `README.md` backend dengan panduan login admin lokal.
+  - `.env.example` dengan variabel seed testing.
+- Removed:
+  - None.
+- Breaking Changes:
+  - None.
+- Notes:
+  - Seed hanya untuk kebutuhan development/testing lokal.
