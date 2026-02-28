@@ -73,3 +73,25 @@
   - None.
 - Notes:
   - Setiap perubahan backend berikutnya wajib tambah step baru, bukan overwrite step lama.
+
+## STEP-BE-005 - NestJS Migration Baseline
+- Date: 2026-02-28
+- Spec References:
+  - STEP-007
+  - REQ-AUTH-001
+  - REQ-AUTH-002
+  - REQ-AUTH-003
+- Added:
+  - Migrasi runtime backend ke NestJS + TypeScript.
+  - Modul auth NestJS (`AuthModule`, `AuthController`, `AuthService`).
+  - Global exception filter dengan envelope error standar.
+  - Prisma schema baseline (`prisma/schema.prisma`) untuk PostgreSQL.
+- Updated:
+  - Script npm (`build`, `start`, `start:dev`, `prisma:*`).
+  - README backend sesuai stack lock terbaru.
+- Removed:
+  - Legacy scaffold Express/JavaScript di folder `src`.
+- Breaking Changes:
+  - Entry point backend berubah dari `node src/server.js` ke `ts-node-dev src/main.ts` / `node dist/main.js`.
+- Notes:
+  - Data user masih in-memory selama fase migrasi bertahap ke Prisma repository.
