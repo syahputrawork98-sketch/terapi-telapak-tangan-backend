@@ -192,3 +192,20 @@
 - Notes:
   - Verifikasi manual berhasil untuk flow: login admin, list booking pending, confirm booking, mark done.
   - Disarankan tambah test otomatis integration pada step berikutnya.
+
+## STEP-BE-010 - CORS Configuration for Frontend Integration
+- Date: 2026-02-28
+- Spec References:
+  - STEP-007
+  - REQ-AUTH-002
+- Added:
+  - Env `FRONTEND_ORIGIN` untuk kontrol origin frontend.
+- Updated:
+  - `main.ts` dengan `app.enableCors(...)` untuk request dari frontend Nuxt (`http://localhost:3001`).
+  - `.env.example` dengan variabel `FRONTEND_ORIGIN`.
+- Removed:
+  - None.
+- Breaking Changes:
+  - None.
+- Notes:
+  - Fix ini menyelesaikan error CORS saat login dari frontend ke backend.
