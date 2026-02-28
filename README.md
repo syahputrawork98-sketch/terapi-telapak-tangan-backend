@@ -28,6 +28,9 @@ Backend API untuk Terapi Telapak Tangan (MVP).
 - `PATCH /admin/bookings/:id/confirm` (`REQ-BOOKING-005`)
 - `PATCH /admin/bookings/:id/reject` (`REQ-BOOKING-006`)
 - `PATCH /admin/bookings/:id/done` (`REQ-BOOKING-007`)
+- `POST /super-admin/admins` (`REQ-ADMIN-001`)
+- `GET /super-admin/admins` (`REQ-ADMIN-002`)
+- `PATCH /super-admin/admins/:id` (`REQ-ADMIN-003`)
 
 ## Dev Seed (SUPER_ADMIN)
 Saat `DEV_SEED_ENABLED=true`, aplikasi otomatis membuat akun `SUPER_ADMIN` untuk testing lokal:

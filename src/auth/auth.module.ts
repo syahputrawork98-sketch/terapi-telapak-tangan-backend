@@ -7,5 +7,6 @@ import { DevSeedService } from './dev-seed.service';
 @Module({
   controllers: [AuthController],
   providers: [AuthService, UsersStore, DevSeedService],
+  exports: [UsersStore],
 })
 export class AuthModule {}
