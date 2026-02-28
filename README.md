@@ -1,4 +1,4 @@
-﻿# terapi-telapak-tangan-backend
+# terapi-telapak-tangan-backend
 
 Backend API untuk Terapi Telapak Tangan (MVP).
 
@@ -13,10 +13,15 @@ Backend API untuk Terapi Telapak Tangan (MVP).
 4. Run dev server: `npm run start:dev`
 
 ## Implemented
+- `GET /health`
 - `POST /auth/register` (`REQ-AUTH-001`)
 - `POST /auth/login` (`REQ-AUTH-002`)
 - `GET /auth/me` (`REQ-AUTH-003`)
+- `GET /slots` (`REQ-SLOT-001`)
+- `POST /admin/slots` (`REQ-SLOT-002`)
+- `PATCH /admin/slots/:id` (`REQ-SLOT-003`)
+- `DELETE /admin/slots/:id` (`REQ-SLOT-004`)
 
 ## Notes
-- Storage user saat ini masih in-memory (`UsersStore`) untuk menjaga migrasi bertahap.
-- Prisma schema sudah disiapkan sebagai baseline migrasi ke DB.
+- Storage slot dan user masih in-memory untuk menjaga migrasi bertahap.
+- Prisma schema sudah disiapkan sebagai baseline migrasi penuh ke DB repository.

@@ -1,4 +1,4 @@
-﻿import { createHmac, timingSafeEqual } from 'crypto';
+import { createHmac, timingSafeEqual } from 'crypto';
 import { ENV } from '../../config/env';
 
 interface TokenPayload {
@@ -8,7 +8,7 @@ interface TokenPayload {
   exp: number;
 }
 
-function encode(data: Record<string, unknown>): string {
+function encode(data: unknown): string {
   return Buffer.from(JSON.stringify(data)).toString('base64url');
 }
 

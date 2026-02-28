@@ -1,4 +1,4 @@
-﻿# Backend Change Log
+# Backend Change Log
 
 ## STEP-BE-001 - Repository Bootstrap
 - Date: 2026-02-28
@@ -95,3 +95,26 @@
   - Entry point backend berubah dari `node src/server.js` ke `ts-node-dev src/main.ts` / `node dist/main.js`.
 - Notes:
   - Data user masih in-memory selama fase migrasi bertahap ke Prisma repository.
+
+## STEP-BE-006 - Health and Slot Module Implementation
+- Date: 2026-02-28
+- Spec References:
+  - STEP-004
+  - STEP-007
+  - REQ-SLOT-001
+  - REQ-SLOT-002
+  - REQ-SLOT-003
+  - REQ-SLOT-004
+- Added:
+  - Endpoint `GET /health` pada NestJS module khusus health.
+  - Modul `Slots` dengan endpoint public/admin sesuai API contract.
+  - Role-based guard (`ADMIN|SUPER_ADMIN`) untuk endpoint `/admin/slots/*`.
+  - Validasi slot (format waktu/tanggal, capacity, status, no overlap).
+- Updated:
+  - README backend: daftar endpoint implemented terbaru.
+- Removed:
+  - None.
+- Breaking Changes:
+  - None.
+- Notes:
+  - Slot storage masih in-memory, akan dipindah ke Prisma repository pada step berikutnya.
