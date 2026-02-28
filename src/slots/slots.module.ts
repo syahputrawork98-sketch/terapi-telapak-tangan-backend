@@ -8,5 +8,6 @@ import { RolesGuard } from '../common/guards/roles.guard';
 @Module({
   controllers: [SlotsController],
   providers: [SlotsService, SlotsStore, RolesGuard, Reflector],
+  exports: [SlotsStore],
 })
 export class SlotsModule {}

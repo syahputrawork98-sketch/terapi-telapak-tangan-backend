@@ -21,6 +21,13 @@ Backend API untuk Terapi Telapak Tangan (MVP).
 - `POST /admin/slots` (`REQ-SLOT-002`)
 - `PATCH /admin/slots/:id` (`REQ-SLOT-003`)
 - `DELETE /admin/slots/:id` (`REQ-SLOT-004`)
+- `POST /bookings` (`REQ-BOOKING-001`)
+- `GET /bookings/me` (`REQ-BOOKING-002`)
+- `PATCH /bookings/:id/cancel` (`REQ-BOOKING-003`)
+- `GET /admin/bookings` (`REQ-BOOKING-004`)
+- `PATCH /admin/bookings/:id/confirm` (`REQ-BOOKING-005`)
+- `PATCH /admin/bookings/:id/reject` (`REQ-BOOKING-006`)
+- `PATCH /admin/bookings/:id/done` (`REQ-BOOKING-007`)
 
 ## Dev Seed (SUPER_ADMIN)
 Saat `DEV_SEED_ENABLED=true`, aplikasi otomatis membuat akun `SUPER_ADMIN` untuk testing lokal:
@@ -32,5 +39,5 @@ Default lokal:
 - Password: `superadmin123`
 
 ## Notes
-- Storage slot dan user masih in-memory untuk menjaga migrasi bertahap.
+- Storage user, slot, booking masih in-memory untuk menjaga migrasi bertahap.
 - Prisma schema sudah disiapkan sebagai baseline migrasi penuh ke DB repository.

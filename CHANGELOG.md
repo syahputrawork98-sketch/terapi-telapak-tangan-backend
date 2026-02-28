@@ -137,3 +137,30 @@
   - None.
 - Notes:
   - Seed hanya untuk kebutuhan development/testing lokal.
+## STEP-BE-008 - Booking Module Implementation
+- Date: 2026-02-28
+- Spec References:
+  - STEP-004
+  - STEP-007
+  - REQ-BOOKING-001
+  - REQ-BOOKING-002
+  - REQ-BOOKING-003
+  - REQ-BOOKING-004
+  - REQ-BOOKING-005
+  - REQ-BOOKING-006
+  - REQ-BOOKING-007
+- Added:
+  - Modul `Bookings` dengan endpoint user dan admin sesuai kontrak API.
+  - State transition booking (`PENDING`, `CONFIRMED`, `REJECTED`, `CANCELED`, `DONE`).
+  - Status log in-memory (`booking_status_logs`) untuk semua perubahan status.
+  - Rule slot locking: booking `PENDING` menutup slot, `REJECTED/CANCELED` membuka slot kembali.
+- Updated:
+  - `AppModule` import `BookingsModule`.
+  - `SlotsModule` export `SlotsStore` untuk integrasi booking-slot.
+  - `README.md` backend dengan daftar endpoint booking.
+- Removed:
+  - None.
+- Breaking Changes:
+  - None.
+- Notes:
+  - Semua data booking masih in-memory dan akan dipindah ke Prisma repository di tahap migrasi data layer.
